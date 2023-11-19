@@ -9,21 +9,25 @@ import java.util.List;
 
 
 public class FileReader {
-    public String conical;
+    public String path;
+    public File file;
 
-    public FileReader() {
+    public FileReader(String relativePath) {
         try {
-            conical = new java.io.File(".").getCanonicalPath();
+            path = new java.io.File(".").getCanonicalPath() + relativePath + "/";
         } catch (java.io.IOException e) {
             System.out.println("Error getting canonical path");
         }
+        }
+
+    public void getFile(String fileName) {
+        file = new File(path + fileName);
     }
 
-    public static List<String> intoIter(String path) {
-        File file = new File(path);
+    public List<String> intoIter() {
         Scanner sc = null;
         try {
-            sc = new Scanner(file);
+            sc = new Scanner(this.file);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
             System.exit(1);
@@ -35,5 +39,4 @@ public class FileReader {
         sc.close();
         return lines;
     }
-
 }
